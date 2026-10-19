@@ -23,7 +23,7 @@ Users can also add new music album records through a web form.
 
 ## HubSpot Developer Test Account
 
-[View Music Albums in HubSpot](PASTE_YOUR_HUBSPOT_OBJECT_LIST_URL_HERE)
+[View Music Albums in HubSpot](https://app-eu1.hubspot.com/contacts/149531498/objects/2-255159240/views/all/list)
 
 ## Run Locally
 
