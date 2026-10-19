@@ -1,0 +1,30 @@
+
+doctype html
+html
+    head
+        title= title
+        meta(charset="utf-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+    body
+        h1 Music Albums
+        p Albums retrieved from HubSpot CRM.
+
+        a(href="/update-cobj") Add a new album
+
+        if data.length
+            table(border="1", cellpadding="8", cellspacing="0")
+                thead
+                    tr
+                        th Name
+                        th Artist
+                        th Genre
+                        th Release Year
+                tbody
+                    each album in data
+                        tr
+                            td= album.properties.name
+                            td= album.properties.artist
+                            td= album.properties.genre
+                            td= album.properties.release_year
+        else
+            p No albums found.

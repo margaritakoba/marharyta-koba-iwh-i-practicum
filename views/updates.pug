@@ -1,0 +1,31 @@
+
+doctype html
+html
+    head
+        title= title
+        meta(charset="utf-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+    body
+        h1 Add a Music Album
+
+        form(action="/update-cobj", method="POST")
+            div
+                label(for="name") Album Name
+                input#name(type="text", name="name", required)
+
+            div
+                label(for="artist") Artist
+                input#artist(type="text", name="artist", required)
+
+            div
+                label(for="genre") Genre
+                input#genre(type="text", name="genre", required)
+
+            div
+                label(for="release_year") Release Year
+                input#release_year(type="number", name="release_year", min="1", max="9999")
+
+            button(type="submit") Create Album
+
+        p
+            a(href="/") Back to albums
