@@ -1,58 +1,178 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;500;600;700&display=swap');
 
-body, * {
-    font-family: 'Roboto', sans-serif;
+/* HubSpot brand palette */
+:root {
+    --hs-orange: #FF7A59;       /* Lorax – primary */
+    --hs-orange-dark: #FF5C35;  /* hover */
+    --hs-navy: #33475B;         /* Oxford – text */
+    --hs-slate: #425B76;        /* Sprocket – headings */
+    --hs-teal: #00A4BD;         /* Calypso – accent */
+    --hs-bg: #F5F8FA;           /* Oz – page background */
+    --hs-border: #CBD6E2;       /* borders */
+    --hs-white: #FFFFFF;
+}
+
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+body {
+    font-family: 'Lexend Deca', 'Helvetica Neue', Arial, sans-serif;
+    color: var(--hs-navy);
+    background: var(--hs-bg);
+    line-height: 1.5;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+}
+
 h1 {
-    margin: 1rem;
+    color: var(--hs-slate);
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
 }
 
-.cards {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-}
-
-.card {
-    flex-basis: 31%;
-    margin: 1rem 0.4rem;
-    padding: 1rem 0.4rem 2.5rem 0.4rem;
-    border: solid 1px lightgrey;
-    border-radius: 15px;
-    box-shadow: 3px 2px 6px lightgrey;
-}
-
-.card__email {
-    font-size: 1rem;
-}
-
-.form-wrapper {
-    font-size: 18px;
-    max-width: 768px;
-    margin: 2rem auto;
-    padding: 2rem;
-    border: solid 1px lightgrey;
-    border-radius: 15px;
-    box-shadow: 3px 2px 6px lightgrey;
-}
-
-label, input {
-    margin-top: 5px;
+h1::after {
+    content: "";
     display: block;
-    font-size: inherit;
+    width: 64px;
+    height: 4px;
+    margin-top: 0.75rem;
+    background: var(--hs-orange);
+    border-radius: 2px;
 }
 
-input[type="text"] {
-    padding: .25rem;
+p {
+    margin-bottom: 1rem;
 }
 
+/* Links & buttons */
+a {
+    color: var(--hs-teal);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.btn,
+button[type="submit"],
 input[type="submit"] {
-    background-color: lightgrey;
+    display: inline-block;
+    background: var(--hs-orange);
+    color: var(--hs-white);
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
     border: none;
-    padding: .375rem 1rem;
-    margin-top: 10px;
+    border-radius: 6px;
+    padding: 0.7rem 1.5rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s ease;
+}
+
+.btn:hover,
+button[type="submit"]:hover,
+input[type="submit"]:hover {
+    background: var(--hs-orange-dark);
+    text-decoration: none;
+    color: var(--hs-white);
+}
+
+/* Albums table */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 1.5rem;
+    background: var(--hs-white);
+    border: 1px solid var(--hs-border);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(51, 71, 91, 0.08);
+}
+
+th, td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--hs-border);
+}
+
+th {
+    background: var(--hs-slate);
+    color: var(--hs-white);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr:nth-child(even) {
+    background: var(--hs-bg);
+}
+
+tbody tr:hover {
+    background: #EAF0F6;
+}
+
+.cover {
+    width: 72px;
+    height: 72px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid var(--hs-border);
+}
+
+/* Form */
+.form-wrapper,
+form {
+    background: var(--hs-white);
+    max-width: 640px;
+    margin: 1.5rem 0;
+    padding: 2rem;
+    border: 1px solid var(--hs-border);
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(51, 71, 91, 0.08);
+}
+
+form div {
+    margin-bottom: 1.25rem;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--hs-slate);
+    margin-bottom: 0.4rem;
+}
+
+input[type="text"],
+input[type="number"] {
+    display: block;
+    width: 100%;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--hs-navy);
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--hs-border);
+    border-radius: 6px;
+    background: var(--hs-white);
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    outline: none;
+    border-color: var(--hs-teal);
+    box-shadow: 0 0 0 3px rgba(0, 164, 189, 0.15);
 }
