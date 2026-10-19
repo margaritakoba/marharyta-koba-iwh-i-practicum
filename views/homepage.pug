@@ -20,6 +20,7 @@ html
                         th Artist
                         th Genre
                         th Release Year
+                        th Fans
                 tbody
                     each album in data
                         tr
@@ -35,5 +36,11 @@ html
                             td= album.properties.artist
                             td= album.properties.genre
                             td= album.properties.release_year
+                            td
+                                if album.contacts && album.contacts.length
+                                    each contact in album.contacts
+                                        div= contact.name
+                                else
+                                    span No contacts linked
         else
             p No albums found.

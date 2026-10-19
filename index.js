@@ -31,16 +31,16 @@ app.get('/', async (req, res) => {
             headers,
             params: {
                 limit: 100,
-                properties: 'name,artist,genre,release_year,cover'
+                properties
             }
         });
-
+        
         const albums = await Promise.all(
             response.data.results.map(async (album) => {
+                let coverUrl = null;
                 const fileId = album.properties.cover;
 
-                let coverUrl = null;
-
+                // Get album cover
                 if (fileId) {
                     try {
                         const fileResponse = await axios.get(
@@ -57,9 +57,67 @@ app.get('/', async (req, res) => {
                     }
                 }
 
+                // Get contacts associated with this album
+                let contacts = [];
+
+                try {
+                    const associationResponse = await axios.get(
+                        `${HUBSPOT_URL}/${album.id}/associations/contacts`,
+                        { headers }
+                    );
+
+                    const contactIds = associationResponse.data.results.map(
+                        contact => contact.id
+                    );
+
+                    contacts = await Promise.all(
+                        contactIds.map(async (contactId) => {
+                            try {
+                                const contactResponse = await axios.get(
+                                    `https://api.hubapi.com/crm/v3/objects/contacts/${contactId}`,
+                                    {
+                                        headers,
+                                        params: {
+                                            properties: 'firstname,lastname,email'
+                                        }
+                                    }
+                                );
+
+                                const p = contactResponse.data.properties;
+
+                                return {
+                                    id: contactId,
+                                    name: [
+                                        p.firstname,
+                                        p.lastname
+                                    ].filter(Boolean).join(' ') ||
+                                        p.email ||
+                                        contactId
+                                };
+                            } catch (err) {
+                                console.error(
+                                    `Could not fetch contact ${contactId}:`,
+                                    err.response?.data || err.message
+                                );
+
+                                return {
+                                    id: contactId,
+                                    name: `Contact ${contactId}`
+                                };
+                            }
+                        })
+                    );
+                } catch (err) {
+                    console.error(
+                        `Could not get contacts for ${album.properties.name}:`,
+                        err.response?.data || err.message
+                    );
+                }
+
                 return {
                     ...album,
-                    coverUrl
+                    coverUrl,
+                    contacts
                 };
             })
         );
