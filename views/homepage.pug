@@ -5,16 +5,40 @@ html
         title= title
         meta(charset="utf-8")
         meta(name="viewport", content="width=device-width, initial-scale=1")
+        style.
+            body {
+                font-family: Arial, sans-serif;
+                max-width: 1000px;
+                margin: 40px auto;
+                padding: 0 20px;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            th, td {
+                border: 1px solid #ddd;
+                padding: 12px;
+                text-align: left;
+            }
+            th {
+                background: #f2f2f2;
+            }
+            .cover {
+                width: 100px;
+                height: 100px;
+                object-fit: cover;
+            }
     body
         h1 Music Albums
         p Albums retrieved from HubSpot CRM.
-
         a(href="/update-cobj") Add a new album
 
         if data.length
-            table(border="1", cellpadding="8", cellspacing="0")
+            table
                 thead
                     tr
+                        th Cover
                         th Name
                         th Artist
                         th Genre
@@ -22,6 +46,14 @@ html
                 tbody
                     each album in data
                         tr
+                            td
+                                if album.coverUrl
+                                    img.cover(
+                                        src=album.coverUrl
+                                        alt=album.properties.name + ' cover'
+                                    )
+                                else
+                                    span No cover
                             td= album.properties.name
                             td= album.properties.artist
                             td= album.properties.genre

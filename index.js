@@ -21,22 +21,52 @@ const headers = {
     'Content-Type': 'application/json'
 };
 
-const properties = 'name,artist,genre,release_year';
+const properties = 'name,artist,genre,release_year,cover';
 
 // Route 1: Display all Music Albums
+
 app.get('/', async (req, res) => {
     try {
         const response = await axios.get(HUBSPOT_URL, {
             headers,
             params: {
                 limit: 100,
-                properties
+                properties: 'name,artist,genre,release_year,cover'
             }
         });
 
+        const albums = await Promise.all(
+            response.data.results.map(async (album) => {
+                const fileId = album.properties.cover;
+
+                let coverUrl = null;
+
+                if (fileId) {
+                    try {
+                        const fileResponse = await axios.get(
+                            `https://api.hubapi.com/files/v3/files/${fileId}/signed-url`,
+                            { headers }
+                        );
+
+                        coverUrl = fileResponse.data.url;
+                    } catch (err) {
+                        console.error(
+                            `Could not get cover for ${album.properties.name}:`,
+                            err.response?.data || err.message
+                        );
+                    }
+                }
+
+                return {
+                    ...album,
+                    coverUrl
+                };
+            })
+        );
+
         res.render('homepage', {
             title: 'Music Albums | HubSpot',
-            data: response.data.results
+            data: albums
         });
     } catch (error) {
         console.error(
