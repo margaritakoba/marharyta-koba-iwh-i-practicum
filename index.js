@@ -21,7 +21,7 @@ const headers = {
     'Content-Type': 'application/json'
 };
 
-const properties = 'name,artist,genre,release_year,cover';
+const properties = 'name,artist,genre,release_year';
 
 // Route 1: Display all Music Albums
 
@@ -37,25 +37,6 @@ app.get('/', async (req, res) => {
         
         const albums = await Promise.all(
             response.data.results.map(async (album) => {
-                let coverUrl = null;
-                const fileId = album.properties.cover;
-
-                // Get album cover
-                if (fileId) {
-                    try {
-                        const fileResponse = await axios.get(
-                            `https://api.hubapi.com/files/v3/files/${fileId}/signed-url`,
-                            { headers }
-                        );
-
-                        coverUrl = fileResponse.data.url;
-                    } catch (err) {
-                        console.error(
-                            `Could not get cover for ${album.properties.name}:`,
-                            err.response?.data || err.message
-                        );
-                    }
-                }
 
                 // Get contacts associated with this album
                 let contacts = [];
@@ -116,7 +97,6 @@ app.get('/', async (req, res) => {
 
                 return {
                     ...album,
-                    coverUrl,
                     contacts
                 };
             })

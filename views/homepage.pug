@@ -15,7 +15,6 @@ html
             table
                 thead
                     tr
-                        th Cover
                         th Name
                         th Artist
                         th Genre
@@ -24,14 +23,6 @@ html
                 tbody
                     each album in data
                         tr
-                            td
-                                if album.coverUrl
-                                    img.cover(
-                                        src=album.coverUrl
-                                        alt=album.properties.name + ' cover'
-                                    )
-                                else
-                                    span No cover
                             td= album.properties.name
                             td= album.properties.artist
                             td= album.properties.genre
